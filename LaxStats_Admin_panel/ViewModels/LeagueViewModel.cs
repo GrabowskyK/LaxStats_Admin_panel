@@ -1,8 +1,13 @@
 ﻿using LaxStats_Admin_panel.Commands;
+using LaxStats_Admin_panel.Model.DTO;
 using MvvmHelpers;
+using MvvmHelpers.Commands;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,45 +20,51 @@ namespace LaxStats_Admin_panel.ViewModels
 
         public ICommand UpdateViewCommand { get; set; }
 
-        public LeagueViewModel(MainViewModel _mainViewModel) 
+        public LeagueViewModel(MainViewModel _mainViewModel)
         {
             mainViewModel = _mainViewModel;
-            TestV2 = new RelayCommand(Testv2Func);
             UpdateViewCommand = new UpdateViewCommand(mainViewModel);
+            LoadLeagues();
         }
 
-        private string _Napis;
-        public string Napis
+        private ObservableCollection<LeagueDTO> league;
+        public ObservableCollection<LeagueDTO> League
         {
-            get
-            {
-                return _Napis;
-            }
+            get => league;
             set
             {
-                _Napis = value;
-                OnPropertyChanged(nameof(Napis));
+                league = value;
+                OnPropertyChanged(nameof(League));
             }
         }
 
-        private ICommand _TestV2;
-        public ICommand TestV2
+        private async Task LoadLeagues()
         {
-            get
+            using (var client = new HttpClient())
             {
-                Napis = "Polibuda";
-                return _TestV2;
-            }
-            set
-            {
-                _TestV2 = value;
-                UpdateViewCommand?.Execute(nameof(mainViewModel.SelectedViewModel));
+                try
+                {
+                    string url = "https://localhost:7006/League/GetLeagues";
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        List<LeagueDTO> leagues = JsonConvert.DeserializeObject<List<LeagueDTO>>(jsonResponse);
+                        League = new ObservableCollection<LeagueDTO>(leagues);
+                        Console.WriteLine(jsonResponse);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Błąd: " + response.StatusCode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Błąd: " + ex.Message);
+                }
             }
         }
 
-        public void Testv2Func(object obj) 
-        {
-            TestV2 = null;
-        }
     }
 }

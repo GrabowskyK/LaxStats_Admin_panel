@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="LaxStats_Admin_panel.View.CreateLeagueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LaxStats_Admin_panel.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.2*" MinHeight="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Width="50" Height="25" Content="Back" Command="{Binding UpdateViewCommand}" CommandParameter="Team"></Button>
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300px">
+        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" FontSize="28">Name</Label>
+            <TextBox x:Name="LeagueNameBox" Width="300px" Grid.Row="1" Grid.Column="1" Padding="15" FontSize="28" BorderBrush="Black" Margin="0 0 0 20" 
+                    Text="{Binding LeagueName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" FontSize="28">Year</Label>
+                <TextBox x:Name="LeagueYearBox" Width="300px" Grid.Row="1" Grid.Column="1" Padding="15" FontSize="28" BorderBrush="Black" Margin="0 0 0 20" 
+                         Text="{Binding LeagueYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label x:Name="ErrorLabel" FontSize="24" Foreground="Red" Content="{Binding ErrorText}"></Label>
+        </StackPanel>
+        <Button x:Name="CreateLeagueButton" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                Padding="15"
+                FontSize="19px"
+                IsEnabled="{Binding CreateButtonEnable}"
+                Command="{Binding CreateLeague}">Create</Button>
+        
+    </Grid>
+</UserControl>

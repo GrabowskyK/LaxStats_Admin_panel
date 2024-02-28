@@ -67,11 +67,6 @@ namespace LaxStats_Admin_panel
                 httpClient.Dispose();
             }
         }
-        public static async Task Main(string[] args)
-        {
-            
-        }
-
         private async void AddPlayer_Click(object sender, RoutedEventArgs e)
         {
             var playerDTO = new PlayerDTO

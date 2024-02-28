@@ -8,6 +8,7 @@ namespace LaxStats_Admin_panel.Model.DTO
 {
     public class LeagueDTO
     {
+
         public string Name { get; set; }
         public int Year { get; set; }
     }

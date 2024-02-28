@@ -20,15 +20,19 @@ namespace LaxStats_Admin_panel.ViewModels
             {
                 _selectedViewModel = value;
                 OnPropertyChanged(nameof(SelectedViewModel));
-                MessageBox.Show("Selected vm" + _selectedViewModel);
             }
         }
 
         public ICommand UpdateViewCommand { get; set; }
-
+        public LeagueViewModel leagueViewModel { get;}
+        public CreateLeagueViewModel createLeagueViewModel { get; }
+        public TeamViewModel teamViewModel { get; }
         public MainViewModel()
         {
             UpdateViewCommand = new UpdateViewCommand(this);
+            leagueViewModel = new LeagueViewModel(this);
+            createLeagueViewModel = new CreateLeagueViewModel(this);
+            teamViewModel = new TeamViewModel(this);
         }
     }
 }

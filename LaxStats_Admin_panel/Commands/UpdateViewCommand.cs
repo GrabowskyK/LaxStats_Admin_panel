@@ -29,14 +29,16 @@ namespace LaxStats_Admin_panel.Commands
         {
             if (parameter.ToString() == "League")
             {
-                viewModel.SelectedViewModel = new LeagueViewModel(viewModel);
-               // viewModel.SelectedViewModel = new LeagueViewModel(viewModel);
+                viewModel.SelectedViewModel = viewModel.leagueViewModel;
             }
             else if (parameter.ToString() == "Team")
             {
-                viewModel.SelectedViewModel = new TeamViewModel(viewModel);
+                viewModel.SelectedViewModel = viewModel.teamViewModel;
             }
-            //MessageBox.Show(viewModel.SelectedViewModel.ToString());
+            else if (parameter.ToString() == "AddLeague")
+            {
+                viewModel.SelectedViewModel = viewModel.createLeagueViewModel;
+            }
         }
     }
 }
